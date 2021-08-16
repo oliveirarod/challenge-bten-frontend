@@ -1,29 +1,32 @@
-# Challenge Bten Fullstack
+# Challenge Bten Frontend
 
+## Instruções
+
+Criar um site web utilizando angular 11, com os seguintes requisitos:
+
+- Tela de Login
+- Tela de Cadastro (opção caso o usuário não tenha login)
+- Tela de Dashboard com gráficos em tela logada (dados mockados)
+
+## Exemplo de tela logada
+Modelo de Dashboard a ser seguido
 
 
 ![alt text](https://res.cloudinary.com/hew4hghip/image/upload/v1619198749/geral/Challenge_bten_front.png)
 
-## Development server
+## Iniciando Client:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```sh
+cd client
+yarn
+ng serve
+```
 
-## Code scaffolding
+## Entrega:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Criar um repositório público no github ou bitbucket com esse código e nos enviar o link
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Extras (opcional): 
+- Telas responsivas
+- Testes unitários
+- Hospedar em servidor gratuito (Heroku por exemplo)
