@@ -1,1 +1,76 @@
-<p>dashboard works!</p>
+<mat-sidenav-container class="dashboard-container">
+  <mat-sidenav mode="side" opened>
+    <div class="sidenav-brand">
+      <h1>Dashboard Kit</h1>
+    </div>
+  
+    <nav>
+      <ul>
+        <div *ngFor="let route of sidenavRoutes; index as i">
+          <a routerLinkActive="active" [routerLink]="route.route">
+            <li>
+              <mat-icon aria-hidden="false">{{ route.icon }}</mat-icon>
+              {{ route.name }}
+            </li>
+            </a>
+          <hr *ngIf="i == 5">
+        </div>
+      </ul>
+    </nav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <h1>Overview</h1>
+        <span class="navbar-spacer"></span>
+        
+        <div>
+          <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+          <mat-icon aria-hidden="false" aria-label="Notifications">notifications</mat-icon>
+          <hr>
+          <span>{{ user.name }}</span>
+          <img [src]="user.image" alt="">
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-grid-list cols="4" gutterSize="1.5rem" rowHeight="7:4" class="cards-grid">
+      <mat-grid-tile *ngFor="let data of cardsData">
+        <div>
+          <h3>{{ data.title }}</h3>
+          <span>{{ data.value }}</span>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="4" rowHeight="5:2" class="chart-grid">
+      <mat-grid-tile colspan="3">
+        <h3><strong>Today's trends</strong></h3>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div>
+          <h4>{{ chartInfo[0].title }}</h4>
+          <span>{{ chartInfo[0].value }}</span>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3" rowspan="4">
+        <div>
+          <div>
+            <canvas 
+              baseChart
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [colors]="lineChartColors"
+              chartType="line"></canvas>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile *ngFor="let info of chartInfo | slice:1; index as i">
+        <div>
+          <h4>{{ info.title }}</h4>
+          <span>{{ info.value }}</span>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-sidenav-content>
+</mat-sidenav-container>
