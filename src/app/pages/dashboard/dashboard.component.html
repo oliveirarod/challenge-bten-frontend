@@ -1,7 +1,7 @@
 <mat-sidenav-container class="dashboard-container" [hasBackdrop]="hasBackdrop">
     <mat-sidenav #sidenav mode="side" [(opened)]="sidenavOpened">
         <div class="sidenav-brand">
-            <h1>Dashboard Kit</h1>
+            <h1>Bten - Challenge</h1>
             <mat-icon class="btn-close-sidenav" aria-hidden="false" aria-label="Close" *ngIf="hasBackdrop" (click)="sidenav.toggle()">close</mat-icon>
         </div>
     
@@ -52,10 +52,8 @@
                             <span>{{ dateTime }}</span>
                         </div>
                         <div>
-                            <hr>
-                            <span>Today</span>
-                            <hr>
-                            <span>Yesterday</span>
+                            <hr><span>Today</span>
+                            <hr><span>Yesterday</span>
                         </div>
                     </div>
                 </div>
@@ -64,8 +62,8 @@
                     <canvas 
                         baseChart
                         chartType="line"
-                        [datasets]="lineChartTeste.data"
-                        [labels]="lineChartTeste.labels"
+                        [datasets]="lineChartDataAndLabel.data"
+                        [labels]="lineChartDataAndLabel.labels"
                         [colors]="lineChartColors"
                         [legend]="lineChartLegend"
                         [options]="lineChartOptions"></canvas>

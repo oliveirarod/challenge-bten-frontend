@@ -30,6 +30,11 @@ export class DashboardService {
   getCardsData = () => this.cardsData;
   getChartInfo = () => this.chartInfo;
 
+  // "Create" user
+  createUser(newUser: { name: string, email: string, password: string }){
+    this.user.name = newUser.name;
+  } 
+
   // Get fake chart data
   getChartData(horizontalDataAmount: number, max: number = 40, min: number = 0) {
     let lineChartData: ChartDataSets[] = [
@@ -44,9 +49,6 @@ export class DashboardService {
       lineChartData[1].data?.push(Math.random() * (max - min) + min);
     }
 
-    return { 
-      data: lineChartData, 
-      labels: lineChartLabels 
-    };
+    return { data: lineChartData, labels: lineChartLabels };
   }
 }

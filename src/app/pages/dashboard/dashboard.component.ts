@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { Color } from 'ng2-charts';
-
 import { DashboardService } from './dashboard.service/dashboard.service';
 
 @Component({
@@ -61,7 +60,7 @@ export class DashboardComponent implements OnInit {
   }
 
   // Chart features
-  lineChartTeste = this.restApi.getChartData(6);
+  lineChartDataAndLabel = this.restApi.getChartData(6);
   lineChartLegend = false;
 
   lineChartColors: Color[] = [
