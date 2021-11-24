@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ChartOptions } from 'chart.js';
+import { Color } from 'ng2-charts';
+
+import { DashboardService } from './dashboard.service/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,55 +19,78 @@ export class DashboardComponent implements OnInit {
     { name: "Agents", route: "/agents", icon: 'person' },
     { name: "Articles", route: "/articles", icon: 'article' },
     { name: "Settings", route: "/settings", icon: 'settings' },
-    { name: "Subscription", route: "/subscription", icon: 'subscriptions' }
+    { name: "Logout", route: "/login", icon: 'logout' }
   ]
 
-  user = { name: "Jones Ferdinand", image: "../../../assets/fake-user.png" }
+  sidenavOpened!: boolean;
+  hasBackdrop!: boolean ;
+  @HostListener('window:resize', ['$event']) onResize() {
+    this.isMobile(1000);
+  }
 
-  cardsData = [
-    { title: "Unresolved", value: 60 },
-    { title: "Overdue", value: 16 },
-    { title: "Open", value: 43 },
-    { title: "On hold", value: 64 }
-  ]
+  user!: { name: string, image: string};
+  cardsData!: { title: string, value: number }[];
+  chartInfo!: { title: string, value: string }[];
+  dateTime = new Date().toLocaleString().split(' ')[0];
 
-  chartInfo = [
-    { title: "Resolved", value: 449 },
-    { title: "Received", value: 426 },
-    { title: "Average first response time", value: "33m" },
-    { title: "Average response time", value: "3h 8m" },
-    { title: "Resolution within SLA", value: "94%" },
-  ]
+  // LineChart Colors
+  todayLine = '#2427CA';
+  yesterdayLine = '#CCCCCC';
 
-  constructor() { }
-
-  public lineChartData: ChartDataSets[] = [
-    { data: [], label: 'Today' },
-    { data: [], label: 'Yesterday' },
-  ];
-
-  public lineChartLabels: Label[] = [];
-
-  public lineChartColors: Color[] = [
-    {
-      borderColor: '#2427cace',
-      backgroundColor: '#2427ca11',
-    },
-    {
-      borderColor: '#CCC',
-      backgroundColor: 'transparent',
-    },
-  ];
+  constructor(private restApi: DashboardService) { }
 
   ngOnInit(): void {
-    this.getChartData(22);
+    this.getUser();
+    this.getCardsData();
+    this.getChartInfo();
+    this.isMobile(1000);
   }
 
-  getChartData(horizontalDataAmount: number, max: number = 60, min: number = 0) {
-    for(let i = 0; i <= horizontalDataAmount; i++) {
-      this.lineChartLabels.push(`${i}`);
-      this.lineChartData[0].data?.push(Math.random() * (max - min) + min);
-      this.lineChartData[1].data?.push(Math.random() * (max - min) + min);
+  getUser = () => { this.user = this.restApi.getUser() };
+  getCardsData = () => { this.cardsData = this.restApi.getCardsData() };
+  getChartInfo = () => { this.chartInfo = this.restApi.getChartInfo() };
+
+  isMobile(screenWidth: number) {
+    if (window.innerWidth > screenWidth) {
+      this.sidenavOpened = true;
+      this.hasBackdrop = false;
+    } else {
+      this.sidenavOpened = false;
+      this.hasBackdrop = true;
     }
   }
+
+  // Chart features
+  lineChartTeste = this.restApi.getChartData(6);
+  lineChartLegend = false;
+
+  lineChartColors: Color[] = [
+    {
+      borderColor: this.todayLine,
+      backgroundColor: `${this.todayLine}11`,
+    },
+    {
+      borderColor: this.yesterdayLine,
+      backgroundColor: `${this.yesterdayLine}11`,
+    },
+  ];
+  
+  lineChartOptions: ChartOptions = {
+    scales: {
+      yAxes: [{
+        display: true,
+        ticks: {
+          beginAtZero: true,
+          stepSize: 10
+        },
+        position: 'right',
+      }],
+      xAxes: [{
+        gridLines: {
+          color: "#00000000",
+        }   
+      }]
+    },
+    responsive: true,
+  };
 }
